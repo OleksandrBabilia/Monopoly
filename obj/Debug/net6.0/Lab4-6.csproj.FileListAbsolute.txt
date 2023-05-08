@@ -1,0 +1,15 @@
+D:\Study\4 SEM\Labs\MAPZ\mapz\Lab4\Lab4-6\bin\Debug\net6.0\Lab4-6.exe
+D:\Study\4 SEM\Labs\MAPZ\mapz\Lab4\Lab4-6\bin\Debug\net6.0\Lab4-6.deps.json
+D:\Study\4 SEM\Labs\MAPZ\mapz\Lab4\Lab4-6\bin\Debug\net6.0\Lab4-6.runtimeconfig.json
+D:\Study\4 SEM\Labs\MAPZ\mapz\Lab4\Lab4-6\bin\Debug\net6.0\Lab4-6.dll
+D:\Study\4 SEM\Labs\MAPZ\mapz\Lab4\Lab4-6\bin\Debug\net6.0\Lab4-6.pdb
+D:\Study\4 SEM\Labs\MAPZ\mapz\Lab4\Lab4-6\obj\Debug\net6.0\Lab4-6.csproj.AssemblyReference.cache
+D:\Study\4 SEM\Labs\MAPZ\mapz\Lab4\Lab4-6\obj\Debug\net6.0\Lab4-6.GeneratedMSBuildEditorConfig.editorconfig
+D:\Study\4 SEM\Labs\MAPZ\mapz\Lab4\Lab4-6\obj\Debug\net6.0\Lab4-6.AssemblyInfoInputs.cache
+D:\Study\4 SEM\Labs\MAPZ\mapz\Lab4\Lab4-6\obj\Debug\net6.0\Lab4-6.AssemblyInfo.cs
+D:\Study\4 SEM\Labs\MAPZ\mapz\Lab4\Lab4-6\obj\Debug\net6.0\Lab4-6.csproj.CoreCompileInputs.cache
+D:\Study\4 SEM\Labs\MAPZ\mapz\Lab4\Lab4-6\obj\Debug\net6.0\Lab4-6.dll
+D:\Study\4 SEM\Labs\MAPZ\mapz\Lab4\Lab4-6\obj\Debug\net6.0\refint\Lab4-6.dll
+D:\Study\4 SEM\Labs\MAPZ\mapz\Lab4\Lab4-6\obj\Debug\net6.0\Lab4-6.pdb
+D:\Study\4 SEM\Labs\MAPZ\mapz\Lab4\Lab4-6\obj\Debug\net6.0\Lab4-6.genruntimeconfig.cache
+D:\Study\4 SEM\Labs\MAPZ\mapz\Lab4\Lab4-6\obj\Debug\net6.0\ref\Lab4-6.dll

@@ -17,21 +17,20 @@ namespace Monopoly
     }
     
     public enum TypeCard { Chance, CommunityChest, TrainStation, Building, Street }
-    public enum PropertySituation { Free, Bought, House, Hotel }
+    public enum CardSituation { Free, Bought, House, Hotel }
 
-    public class Card: ICard
+    public class Card: Square
     {
         public TypeCard type; // type of card
         public int what; // what the card says
-        public int position;
+        //public int position;
         public string name;
         public PropertySituation situation;
         public long buyingCost;
         public long taxes;
         public Player owner;
-        public bool isProperty;
 
-        public int Position { get => position; set => position = value; }
+        //public int Position { get => position; set => position = value; }
         public int What { get => what; set => what = value; }
         public string Name { get => name; set => name = value; }
         public TypeCard Type { get => type; set => type = value; }
@@ -41,14 +40,13 @@ namespace Monopoly
         public Player Owner { get => owner; set => owner = value; }
 
         public Card() {  }
-        public Card(TypeCard type, int positionm, bool isProperty)
+        public Card(TypeCard type, int position) : base(position)
         {
             this.type = type;
             this.what = RandomInt();
             this.position = position;
-            this.isProperty = false;
         }
-        public Card(string Name, TypeCard Type, long Buying_cost, long Taxes, PropertySituation Situation, Player Owner, int position, bool isProperty)
+        public Card(string Name, TypeCard Type, long Buying_cost, long Taxes, PropertySituation Situation, Player Owner, int position)
         {
             this.name = Name;
             this.type = Type;
@@ -57,7 +55,6 @@ namespace Monopoly
             this.situation = Situation;
             this.owner = Owner;
             this.position = position;
-            this.isProperty = isProperty;
         }
 
         public int RandomInt()

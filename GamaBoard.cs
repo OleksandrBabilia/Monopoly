@@ -5,7 +5,7 @@ namespace Monopoly
     public class GameBoard
     {
         private static GameBoard _instance = null;
-        public Card[] board = new Card[16];
+        public Square[] board = new Square[16];
 
         public GameBoard()
         {
@@ -22,25 +22,25 @@ namespace Monopoly
         }
         public void CreateGameBoard()
         {
-            CardFactory ComunityChestFactory = new CardFactory(TypeCard.CommunityChest);
-            CardFactory ChanceFactory = new CardFactory(TypeCard.Chance);
+            SquareFactory ComunityChestFactory = new SquareFactory(TypeCard.CommunityChest);
+            SquareFactory ChanceFactory = new SquareFactory(TypeCard.Chance);
 
-            board[0] = new Card(); // start: collect $200 as you pass
-            board[1] = new Card("Stepana Banderu ST.", TypeCard.Street, 60, 0, PropertySituation.Free, null, 1, true);
-            board[2] = (Card)ComunityChestFactory.CreateCard(2, false); 
-            board[3] = new Card("Lviv Polytechnic", TypeCard.Building, 60, 0, PropertySituation.Free, null, 3, true);
-            board[4] = new Card(); // income tax (pay $200)
-            board[5] = new Card("Karpinskoho ST.", TypeCard.Street, 200, 0, PropertySituation.Free, null, 5, false);
-            board[6] = (Card)ChanceFactory.CreateCard(6, false);
-            board[7] = new Card("Railway Station", TypeCard.TrainStation, 100, 0, PropertySituation.Free, null, 7, false);
+            board[0] = new Square(); // start: collect $200 as you pass
+            board[1] = new Property("Stepana Banderu ST.", TypeProperty.Street, 60, 0, PropertySituation.Free, null, 1);
+            board[2] = (Card)ComunityChestFactory.CreateSquare(2); 
+            board[3] = new Property("Lviv Polytechnic", TypeProperty.Building, 60, 0, PropertySituation.Free, null, 3);
+            board[4] = new Square(); // income tax (pay $200)
+            board[5] = new Property("Karpinskoho ST.", TypeProperty.Street, 200, 0, PropertySituation.Free, null, 5);
+            board[6] = (Card)ChanceFactory.CreateSquare(6);
+            board[7] = new Property("Railway Station", TypeProperty.TrainStation, 100, 0, PropertySituation.Free, null, 7);
             board[8] = new Card(); //jail
-            board[9] = new Card("LNU Franka", TypeCard.Building, 140, 0, PropertySituation.Free, null, 9, false);
-            board[10] = (Card)ComunityChestFactory.CreateCard(10, false);
-            board[11] = new Card("Universytetska ST.", TypeCard.Street, 180, 0, PropertySituation.Free, null, 11, false);
+            board[9] = new Property("LNU Franka", TypeProperty.Building, 140, 0, PropertySituation.Free, null, 9);
+            board[10] = (Card)ComunityChestFactory.CreateSquare(10);
+            board[11] = new Property("Universytetska ST.", TypeProperty.Street, 180, 0, PropertySituation.Free, null, 11);
             board[12] = new Card(); // free parking
-            board[13] = new Card("LNMU Halytsky", TypeCard.Building, 220, 0, PropertySituation.Free, null, 13, false);
-            board[14] = (Card)ChanceFactory.CreateCard(14, false);
-            board[25] = new Card("Pekarska ST.", TypeCard.Street, 220, 0, PropertySituation.Free, null, 15, false);
+            board[13] = new Property("LNMU Halytsky", TypeProperty.Building, 220, 0, PropertySituation.Free, null, 13);
+            board[14] = (Card)ChanceFactory.CreateSquare(14);
+            board[15] = new Property("Pekarska ST.", TypeProperty.Street, 220, 0, PropertySituation.Free, null, 15);
         }
     }
 

@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace Monopoly
 {
-    
+    public interface ISquare
+    {
+        string GetInfo();
+    }
 
-    /*class Square
+
+    public class Square: ISquare
     {
         public int position;
 
@@ -25,5 +29,5 @@ namespace Monopoly
         {
             return $"Position: {position}";
         }
-    }*/
+    }
 }

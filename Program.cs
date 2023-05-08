@@ -12,7 +12,7 @@ namespace Monopoly
         {
             Game monopoly = new Game();
             monopoly.Create();
-            monopoly.Start();
+            //monopoly.Start();
 
             Console.ReadKey();
         }

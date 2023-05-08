@@ -6,23 +6,23 @@ using System.Threading.Tasks;
 
 namespace Monopoly
 {
-    public interface ICardFactory
+    public interface ISquareFactory
     {
-        ICard CreateCard(int postionm, bool isProperty);
+        ISquare CreateSquare(int postion);
     }
 
-    public class CardFactory: ICardFactory
+    public class SquareFactory: ISquareFactory
     {
         public TypeCard type;
 
-        public CardFactory(TypeCard type)
+        public SquareFactory(TypeCard type)
         {
             this.type = type;
         }
 
-        public ICard CreateCard(int postion, bool isProperty)
+        public ISquare CreateSquare(int postion)
         {
-            return new Card(type, postion, isProperty);
+            return new Card(type, postion);
         }
     }
 }

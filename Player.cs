@@ -63,7 +63,7 @@ namespace Monopoly
             {
                 Console.WriteLine(properties[i].toString());
             }
-            return "Player: " + name + "\nPosition: " + position + "\nMoney: $" + money + "\nProperties: " + nb_prop;
+            return "\nPlayer: " + name + "\nPosition: " + position + "\nMoney: $" + money + "\nProperties: " + nb_prop;
         }
 
         public int[] RollDices()
