@@ -1,15 +1,35 @@
 ﻿using System;
+using static Monopoly.PlayerBuyHotelActionHandler;
+using static Monopoly.PlayerBuyHotelActionHandler.PlayerBuyHouseActionHandler;
 
 namespace Monopoly
 {
     public class Game
     {
+        private static Game _instance = null;
         public List<Player> players = new List<Player>(); // who is playing
         public GameBoard board_game = new GameBoard();
         public int rounds; // number of rounds played
         public Player winner;
+
+        private readonly Dictionary<int, IPlayersActionHandler> _actionHandler;
         public Game()
-        { }
+        {
+            _actionHandler = new Dictionary<int, IPlayersActionHandler>
+        {
+            { 3, new PlayerBuyPropertyActionHandler() },
+            { 4, new PlayerBuyHotelActionHandler() },
+            { 5, new PlayerBuyHouseActionHandler() }
+        };
+        }
+        public static Game GetInstance()
+        {
+            if (_instance == null)
+            {
+                _instance = new Game();
+            }
+            return _instance;
+        }
 
         public bool IsWinner()
         {
@@ -164,6 +184,18 @@ namespace Monopoly
             catch (FormatException e)
             {
                 this.DisplayMenu(player, compt, true);
+            }
+
+            if (resp == 0)
+            {
+                Console.WriteLine("Game Status :");
+                for (int i = 0; i < players.Count; i++)
+                {
+                    Console.WriteLine("\n" + players[i].toString());
+                }
+                Console.ReadKey();
+                Console.Clear();
+                DisplayMenu(player, compt, pos);
             }
 
             switch (resp)
