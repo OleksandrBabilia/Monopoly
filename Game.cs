@@ -1,27 +1,17 @@
 ﻿using System;
-using static Monopoly.PlayerBuyHotelActionHandler;
-using static Monopoly.PlayerBuyHotelActionHandler.PlayerBuyHouseActionHandler;
 
 namespace Monopoly
 {
     public class Game
     {
-        private static Game _instance = null;
+        private static Game _instance;
         public List<Player> players = new List<Player>(); // who is playing
         public GameBoard board_game = new GameBoard();
         public int rounds; // number of rounds played
         public Player winner;
 
         private readonly Dictionary<int, IPlayersActionHandler> _actionHandler;
-        public Game()
-        {
-            _actionHandler = new Dictionary<int, IPlayersActionHandler>
-        {
-            { 3, new PlayerBuyPropertyActionHandler() },
-            { 4, new PlayerBuyHotelActionHandler() },
-            { 5, new PlayerBuyHouseActionHandler() }
-        };
-        }
+
         public static Game GetInstance()
         {
             if (_instance == null)
@@ -88,7 +78,7 @@ namespace Monopoly
                 Console.WriteLine("Player " + (i + 1) + ":");
                 Console.Write("Username: ");
                 string name = Console.ReadLine();
-                Player temp = new Player(prototype);
+                Player temp = prototype.DeepCopy();
                 temp.name = name;
                 players.Add(temp);
                 Console.WriteLine("\nThe player was successfully added!\n");
@@ -155,12 +145,19 @@ namespace Monopoly
                     compt++;
                 }
             }
-            Console.WriteLine("Gagnant :" + winner.Name);
+            Console.WriteLine("Winner :" + winner.Name);
             Console.ReadKey(true);
         }
 
         public void DisplayMenu(Player player, int compt, bool pos)
         {
+            Dictionary<int, IPlayersActionHandler> _actionHandler;
+            _actionHandler = new Dictionary<int, IPlayersActionHandler>
+            {
+                { 3, new PlayerBuyPropertyActionHandler() },
+                { 4, new PlayerBuyHotelActionHandler() },
+                { 5, new PlayerBuyHouseActionHandler() }
+            };
             Console.Clear();
             if (pos)
             {
@@ -197,40 +194,27 @@ namespace Monopoly
                 Console.Clear();
                 DisplayMenu(player, compt, pos);
             }
-
-            switch (resp)
+            else if (resp == 1)
             {
-                case 0:
-                    Console.WriteLine("Game Status :");
-                    for (int i = 0; i < players.Count; i++)
-                    {
-                        Console.WriteLine("\n" + players[i].toString());
-                    }
-                    Console.ReadKey();
-                    Console.Clear();
-                    DisplayMenu(player, compt, pos);
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    //Dashboard(player, compt);
-                    break;
-                case 3:
-                    //PurchaseProperty(player, compt);
-                    break;
-                case 4:
-                    //BuyHouseProperty(player, compt);
-                    break;
-                case 5:
-                    //BuyHotelProperty(player, compt);
-                    break;
-                case 6:
-                    player.loser = true;
-                    break;
-                case 7:
-                    player.money = 0;
-                    player.loser = true;
-                    break;
+                //skip
+            }
+            else if (resp == 2)
+            {
+                Dashboard(player, compt);
+            }
+            else if (resp == 3 || resp == 4 || resp == 5)
+            {
+                IPlayersActionHandler action = _actionHandler[resp];
+                action.buy(player, compt);
+            }
+            else if (resp == 6)
+            {
+                player.loser = true;
+            }
+            else if (resp == 7)
+            {
+                player.loser = true;
+                player.money = 0;
             }
         }
         public void DisplayPosition(Player player, int compt)
@@ -333,13 +317,178 @@ namespace Monopoly
             }
             else if (board_game.board[player.position].GetType() == c.GetType())
             {
-                /*c = (Card)board_game.board[player.position];
+                c = (Card)board_game.board[player.position];
                 Console.WriteLine(c.type.ToString() + " card!");
-                CardSquare(c, player, compt);*/
+                CardSquare(c, player, compt);
             }
             else if (board_game.board[player.position].GetType() == s.GetType())
             {
-               // EmptySquare(player, compt);
+                EmptySquare(player, compt);
+            }
+        }
+        public void Dashboard(Player player, int compt)
+        {
+            Console.Clear();
+            Console.WriteLine("Your position is: " + player.position);
+            Console.WriteLine("You have: $" + player.money);
+            Console.WriteLine("You own " + player.properties.Count() + " properties:\n");
+            if (player.properties.Count() != 0)
+            {
+                foreach (Property p in player.properties)
+                {
+                    Console.WriteLine(p.toString());
+                }
+            }
+            Console.WriteLine("\nPress any key to go back to the menu.");
+            Console.ReadKey(true);
+            DisplayMenu(player, compt, false);
+        }
+        public void CardSquare(Card c, Player player, int compt)
+        {
+            Console.Write("The card says:");
+            int rand_cash = c.RandomCash();
+            int rand_int = c.RandomInt();
+            Console.WriteLine("'" + c.CardInstruction(c.what, rand_cash, rand_int) + "'");
+            if (c.what == 1)
+            {
+                if (player.jail)
+                {
+                    Console.WriteLine("This card allows you to get out of jail. You are now free.");
+                    player.jail = false;
+                }
+                else
+                {
+                    Console.WriteLine("You are not currently in jail. You can keep this card for later.");
+                    player.get_out_of_jail_card = true;
+                }
+            }
+            else if (c.what == 2)
+            {
+                if (rounds < 2)
+                {
+                    Console.WriteLine("It is your lucky day: nobody played before you! You do not have to pay anything.");
+                }
+                else
+                {
+                    if (player.money < rand_cash)
+                    {
+                        Console.WriteLine("You do not have enough money to pay. You lost.");
+                        player.loser = true;
+
+                    }
+                    else
+                    {
+                        players[compt - 1].money += rand_cash;
+                        player.money -= rand_cash;
+                        Console.WriteLine("You have given $" + rand_cash + " to " + players[compt].name);
+                        Console.WriteLine("You now have $" + player.money);
+                    }
+                }
+            }
+            else if (c.what == 3)
+            {
+                if (player.money < rand_cash)
+                {
+                    Console.WriteLine("You do not have enough money to pay. You lost.");
+                    player.loser = true;
+
+                }
+                else
+                {
+                    player.money -= rand_cash;
+                    Console.WriteLine("You have paid $" + rand_cash + " for taxes.");
+                    Console.WriteLine("You now have $" + player.money);
+                }
+            }
+            else if (c.what == 4)
+            {
+                player.money += rand_cash;
+                Console.WriteLine("You have received $" + rand_cash + " from the bank.");
+                Console.WriteLine("You now have $" + player.money);
+            }
+            else if (c.what == 5)
+            {
+                player.MoveForward(rand_int);
+                Console.WriteLine("Your current position is now: " + player.position);
+            }
+            else if (c.what == 6)
+            {
+                player.MoveBackward(rand_int);
+                Console.WriteLine("Your current position is now: " + player.position);
+            }
+            else if (c.what == 7)
+            {
+                player.position = 10;
+                player.jail = true;
+                Console.WriteLine("You are now in jail.");
+            }
+            Console.WriteLine("\nPress any key to go back to the menu.");
+            Console.ReadKey(true);
+        }
+
+        public void EmptySquare(Player player, int compt)
+        {
+            if (player.position == 0)
+            {
+                Console.WriteLine("\nStart square!");
+            }
+            else if (player.position == 4)
+            {
+                Console.WriteLine("Income taxes!\nYou have to pay $200.");
+                if (player.money < 200)
+                {
+                    Console.WriteLine("\nYou do not have enough money. You lost.");
+                    player.loser = true;
+                    Console.WriteLine("\nPress any key to go back to the menu.");
+                    Console.ReadKey(true);
+                    DisplayMenu(player, compt, false);
+                }
+                else
+                {
+                    player.money -= 200;
+                    Console.WriteLine("You now have $" + player.money);
+                    Console.WriteLine("\nPress any key to go back to the menu.");
+                    Console.ReadKey(true);
+                    DisplayMenu(player, compt, false);
+                }
+            }
+            else if (player.position == 10)
+            {
+                Console.WriteLine("\nJail square! But don't worry you are only visiting.");
+            }
+            else if (player.position == 20)
+            {
+                Console.WriteLine("\nFree parking!");
+            }
+            else if (player.position == 30)
+            {
+                Console.WriteLine("\nGo to jail!");
+                player.jail = true;
+                player.position = 10;
+                Console.WriteLine("You are now in jail.");
+                Console.WriteLine("\nPress any key to go back to the menu.");
+                Console.ReadKey(true);
+                DisplayMenu(player, compt, false);
+            }
+            else if (player.position == 38)
+            {
+                Console.WriteLine("Luxury taxes!\nYou have to pay $100.");
+                if (player.money < 100)
+                {
+                    Console.WriteLine("\nYou do not have enough money. You lost.");
+                    player.loser = true;
+                    Console.WriteLine("\nPress any key to go back to the menu.");
+                    Console.ReadKey(true);
+                    DisplayMenu(player, compt, false);
+                }
+                else
+                {
+                    player.money -= 100;
+                    Console.WriteLine("You now have $" + player.money);
+                    Console.WriteLine("\nPress any key to go back to the menu.");
+                    Console.ReadKey(true);
+                    DisplayMenu(player, compt, false);
+                }
             }
         }
     }

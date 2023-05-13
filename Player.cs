@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,7 +14,7 @@ namespace Monopoly
         public int position = 0; // the player's position on the board
         public long money = 1500; // how much money the player owns
         public bool jail = false; // if true then the player is in jail
-        public List<Card> properties = new List<Card>(); // the list of the properties owned by the player
+        public List<Property> properties = new List<Property>(); // the list of the properties owned by the player
         public bool get_out_of_jail_card = false; // if true then the player has a "Get out of jail" card in reserve
         public bool loser = false;
 
@@ -21,11 +22,11 @@ namespace Monopoly
         public int Position { get => position; set => position = value; }
         public long Money { get => money; set => money = value; }
         public bool Jail { get => jail; set => jail = value; }
-        public List<Card> Properties { get => properties; set => properties = value; }
+        public List<Property> Properties { get => properties; set => properties = value; }
         public bool GetOut { get => get_out_of_jail_card; set => get_out_of_jail_card = value; }
         public bool Loser { get => loser; set => loser = value; }
 
-        public Player(string Name, int Position, long Money, bool Jail, List<Card> Properties, bool GetOut, bool Loser)
+        public Player(string Name, int Position, long Money, bool Jail, List<Property> Properties, bool GetOut, bool Loser)
         {
             this.name = Name;
             this.position = Position;
@@ -51,6 +52,19 @@ namespace Monopoly
 
         public Player() { }
 
+        public Player ShallowCopy()
+        {
+            return (Player)this.MemberwiseClone();
+        }
+
+        public Player DeepCopy()
+        {
+            Player clone = (Player)this.MemberwiseClone();
+            clone.properties =  new List<Property>();
+            clone.name = String.Copy(name);
+            return clone;
+        }
+
         public string toString()
         {
             int nb_prop = 0;
@@ -58,12 +72,12 @@ namespace Monopoly
             {
                 nb_prop = properties.Count();
             }
-            Console.WriteLine("Proprerties of : " + name);
+            Console.WriteLine("\nProprerties of: " + name);
             for (int i = 0; i < properties.Count; i++)
             {
                 Console.WriteLine(properties[i].toString());
             }
-            return "\nPlayer: " + name + "\nPosition: " + position + "\nMoney: $" + money + "\nProperties: " + nb_prop;
+            return "Player: " + name + "\nPosition: " + position + "\nMoney: $" + money + "\nProperties: " + nb_prop;
         }
 
         public int[] RollDices()
@@ -72,9 +86,9 @@ namespace Monopoly
             int value1 = rnd.Next(1, 7);
             int value2 = rnd.Next(1, 7);
             int total = value1 + value2;
-            Console.WriteLine("Dice 1 :" + value1);
-            Console.WriteLine("Dice 2 :" + value2);
-            Console.WriteLine("Total =" + total);
+            Console.WriteLine("Dice 1: " + value1);
+            Console.WriteLine("Dice 2: " + value2);
+            Console.WriteLine("Total: " + total);
             int[] tab = new int[2];
             tab[0] = value1;
             tab[1] = value2;
@@ -83,14 +97,7 @@ namespace Monopoly
 
         public bool DoubleBool(int[] tab)
         {
-            if (tab[0] == tab[1])
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return tab[0] == tab[1];
         }
 
         public void MoveForward(int number)

@@ -10,9 +10,9 @@ namespace Monopoly
     {
         static void Main(string[] args)
         {
-            Game monopoly = new Game();
+            Game monopoly = Game.GetInstance();
             monopoly.Create();
-            //monopoly.Start();
+            monopoly.Start();
 
             Console.ReadKey();
         }

@@ -24,7 +24,7 @@ namespace Monopoly
             int[] dices = _player.RollDices();
             Console.ForegroundColor = ConsoleColor.Green;
             _player.MoveForward(dices[0] + dices[1]);
-            Console.WriteLine("\nCurrent position :" + _player.position + "\n");
+            Console.WriteLine("\nCurrent position: " + _player.position + "\n");
             Console.ForegroundColor = ConsoleColor.White;
             Console.ReadKey(true);
 

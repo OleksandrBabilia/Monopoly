@@ -42,8 +42,9 @@ namespace Monopoly
         public Card() {  }
         public Card(TypeCard type, int position) : base(position)
         {
+            Random rnd = new Random();
             this.type = type;
-            this.what = RandomInt();
+            this.what = rnd.Next(1, 7);
             this.position = position;
         }
         public Card(string Name, TypeCard Type, long Buying_cost, long Taxes, PropertySituation Situation, Player Owner, int position)
@@ -60,7 +61,7 @@ namespace Monopoly
         public int RandomInt()
         {
             Random rnd = new Random();
-            int result = rnd.Next(1, 8);
+            int result = rnd.Next(1, 7);
             return result;
         }
 
