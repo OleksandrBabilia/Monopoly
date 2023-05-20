@@ -39,7 +39,13 @@ namespace Monopoly
         public PropertySituation Situation { get => situation; set => situation = value; }
         public Player Owner { get => owner; set => owner = value; }
 
-        public Card() {  }
+        public Card() 
+        {
+            Random rnd = new Random();
+            this.what = rnd.Next(1, 7);
+
+        }
+
         public Card(TypeCard type, int position) : base(position)
         {
             Random rnd = new Random();
@@ -81,7 +87,7 @@ namespace Monopoly
             else if (what == 5) { return "Move " + rand_int + " squares forward"; }
             else if (what == 6) { return "Move " + rand_int + " squares backward"; }
             else if (what == 7) { return "Go to jail"; }
-            else { return "There was an error please try again"; }
+            else { return $"There was an error please try again {what}"; }
         }
         public string toString()
         {

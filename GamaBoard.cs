@@ -37,7 +37,7 @@ namespace Monopoly
             board[9] = new Property("LNU Franka", TypeProperty.Building, 140, 0, PropertySituation.Free, null, 9);
             board[10] = (Card)ComunityChestFactory.CreateSquare(10);
             board[11] = new Property("Universytetska ST.", TypeProperty.Street, 180, 0, PropertySituation.Free, null, 11);
-            board[12] = new Card(); // free parking
+            board[12] = new Card(); // free parking error
             board[13] = new Property("LNMU Halytsky", TypeProperty.Building, 220, 0, PropertySituation.Free, null, 13);
             board[14] = (Card)ChanceFactory.CreateSquare(14);
             board[15] = new Property("Pekarska ST.", TypeProperty.Street, 220, 0, PropertySituation.Free, null, 15);

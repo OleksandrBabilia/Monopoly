@@ -11,7 +11,40 @@ namespace Monopoly
         void buy(Player player, int compt);
     }
 
-    public class PlayerBuyHotelActionHandler : IPlayersActionHandler
+    public abstract class PlayerActionHandlerTemplate : IPlayersActionHandler
+    {
+
+        public void buy(Player player, int compt)
+        {
+            if (player.properties.Count() == 0)
+            {
+                Console.WriteLine("You do not have any properties.");
+                Console.WriteLine("\nPress any key to go back to the menu.");
+            }
+            else
+            {
+                int i = 0;
+                Console.WriteLine("For which property do you want to buy a house?\n");
+                foreach (Property p in player.properties)
+                {
+                    Console.Write(i + 1);
+                    Console.WriteLine(p.toString() + "\n");
+                    i++;
+                }
+                i = int.Parse(Console.ReadLine()) - 1;
+                BoughtProperty bp = new BoughtProperty(player.properties[i], player);
+                while (player.properties[i].GetType() != bp.GetType())
+                {
+                    Console.WriteLine("You cannot buy a house for this property because it already has one.");
+                    Console.WriteLine("1 : Chose another property\n2 : Go back to the menu");
+                    int r = int.Parse(Console.ReadLine());
+                }
+            }
+        }
+    }
+
+
+    public class PlayerBuyHotelActionHandler : PlayerActionHandlerTemplate
     {
         private Game game = Game.GetInstance();
 
@@ -104,7 +137,7 @@ namespace Monopoly
         }
     }
 
-    public class PlayerBuyHouseActionHandler : IPlayersActionHandler
+    public class PlayerBuyHouseActionHandler : PlayerActionHandlerTemplate
     {
         private Game game = Game.GetInstance();
         public void buy(Player player, int compt)
@@ -194,7 +227,7 @@ namespace Monopoly
             }
         }
     }
-    public class PlayerBuyPropertyActionHandler : IPlayersActionHandler
+    public class PlayerBuyPropertyActionHandler : PlayerActionHandlerTemplate
     {
         private Game game = Game.GetInstance();
         public void buy(Player player, int compt)

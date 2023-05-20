@@ -6,7 +6,7 @@ namespace Monopoly
     {
         private static Game _instance;
         public List<Player> players = new List<Player>(); // who is playing
-        public GameBoard board_game = new GameBoard();
+        public GameBoard board_game ;
         public int rounds; // number of rounds played
         public Player winner;
 
@@ -41,6 +41,7 @@ namespace Monopoly
 
         public void Create()
         {
+            board_game = GameBoard.GetInstance();
             Console.WriteLine("Welcome!");
             int amountOfPlayers = 0, level = 0;
            
@@ -93,6 +94,7 @@ namespace Monopoly
             Console.ForegroundColor = ConsoleColor.White;
             Console.ReadKey(true);
         }
+
         public void Start()
         {
             int compt = 0;
@@ -217,6 +219,7 @@ namespace Monopoly
                 player.money = 0;
             }
         }
+
         public void DisplayPosition(Player player, int compt)
         {
             Property p = new Property("", TypeProperty.Street, 0, 0, PropertySituation.Free, null, 0);
@@ -318,6 +321,7 @@ namespace Monopoly
             else if (board_game.board[player.position].GetType() == c.GetType())
             {
                 c = (Card)board_game.board[player.position];
+                Console.WriteLine($"Info :{c.what}/{player.position}");
                 Console.WriteLine(c.type.ToString() + " card!");
                 CardSquare(c, player, compt);
             }
@@ -326,6 +330,7 @@ namespace Monopoly
                 EmptySquare(player, compt);
             }
         }
+
         public void Dashboard(Player player, int compt)
         {
             Console.Clear();
@@ -343,6 +348,7 @@ namespace Monopoly
             Console.ReadKey(true);
             DisplayMenu(player, compt, false);
         }
+
         public void CardSquare(Card c, Player player, int compt)
         {
             Console.Write("The card says:");
@@ -452,15 +458,11 @@ namespace Monopoly
                     DisplayMenu(player, compt, false);
                 }
             }
-            else if (player.position == 10)
-            {
-                Console.WriteLine("\nJail square! But don't worry you are only visiting.");
-            }
-            else if (player.position == 20)
+            else if (player.position == 12)
             {
                 Console.WriteLine("\nFree parking!");
             }
-            else if (player.position == 30)
+            else if (player.position == 8)
             {
                 Console.WriteLine("\nGo to jail!");
                 player.jail = true;
@@ -469,26 +471,6 @@ namespace Monopoly
                 Console.WriteLine("\nPress any key to go back to the menu.");
                 Console.ReadKey(true);
                 DisplayMenu(player, compt, false);
-            }
-            else if (player.position == 38)
-            {
-                Console.WriteLine("Luxury taxes!\nYou have to pay $100.");
-                if (player.money < 100)
-                {
-                    Console.WriteLine("\nYou do not have enough money. You lost.");
-                    player.loser = true;
-                    Console.WriteLine("\nPress any key to go back to the menu.");
-                    Console.ReadKey(true);
-                    DisplayMenu(player, compt, false);
-                }
-                else
-                {
-                    player.money -= 100;
-                    Console.WriteLine("You now have $" + player.money);
-                    Console.WriteLine("\nPress any key to go back to the menu.");
-                    Console.ReadKey(true);
-                    DisplayMenu(player, compt, false);
-                }
             }
         }
     }

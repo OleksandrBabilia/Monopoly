@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Monopoly
 {
-    abstract class PropertyTemplate : Property
+    abstract class PropertyAbstact : Property
     {
-        public PropertyTemplate(Property prop, Player play)
+        public PropertyAbstact(Property prop, Player play)
         {
             this.name = prop.name;
             this.buying_cost = prop.buying_cost;
@@ -25,9 +25,8 @@ namespace Monopoly
         }
     }
 
-    class BoughtProperty : PropertyTemplate
+    class BoughtProperty : PropertyAbstact
     {
-
         public BoughtProperty(Property prop, Player play) : base(prop, play)
         {
             this.taxes = prop.buying_cost / 2;
