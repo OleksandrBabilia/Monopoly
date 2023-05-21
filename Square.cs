@@ -11,7 +11,6 @@ namespace Monopoly
         string GetInfo();
     }
 
-
     public class Square: ISquare
     {
         public int position;

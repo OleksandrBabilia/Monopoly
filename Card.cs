@@ -21,16 +21,15 @@ namespace Monopoly
 
     public class Card: Square
     {
-        public TypeCard type; // type of card
-        public int what; // what the card says
-        //public int position;
+        public TypeCard type; 
+        public int what; 
+        
         public string name;
         public PropertySituation situation;
         public long buyingCost;
         public long taxes;
         public Player owner;
 
-        //public int Position { get => position; set => position = value; }
         public int What { get => what; set => what = value; }
         public string Name { get => name; set => name = value; }
         public TypeCard Type { get => type; set => type = value; }
@@ -53,6 +52,7 @@ namespace Monopoly
             this.what = rnd.Next(1, 7);
             this.position = position;
         }
+
         public Card(string Name, TypeCard Type, long Buying_cost, long Taxes, PropertySituation Situation, Player Owner, int position)
         {
             this.name = Name;
@@ -87,8 +87,9 @@ namespace Monopoly
             else if (what == 5) { return "Move " + rand_int + " squares forward"; }
             else if (what == 6) { return "Move " + rand_int + " squares backward"; }
             else if (what == 7) { return "Go to jail"; }
-            else { return $"There was an error please try again {what}"; }
+            else { return $"There was an error please try again"; }
         }
+
         public string toString()
         {
             return "\tName: " + name + "\n\tType: " + type.ToString() + "\n\tBuying cost: $" + buyingCost + "\n\tTaxes: $" + taxes +

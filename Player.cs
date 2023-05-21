@@ -10,12 +10,12 @@ namespace Monopoly
 {
     public class Player
     {
-        public string name; // the name of the player
-        public int position = 0; // the player's position on the board
-        public long money = 1500; // how much money the player owns
-        public bool jail = false; // if true then the player is in jail
-        public List<Property> properties = new List<Property>(); // the list of the properties owned by the player
-        public bool get_out_of_jail_card = false; // if true then the player has a "Get out of jail" card in reserve
+        public string name; 
+        public int position = 0; 
+        public long money = 1500; 
+        public bool jail = false; 
+        public List<Property> properties = new List<Property>(); 
+        public bool get_out_of_jail_card = false; 
         public bool loser = false;
 
         public string Name { get => name; set => name = value; }

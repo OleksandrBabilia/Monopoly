@@ -14,11 +14,11 @@ namespace Monopoly
     public class Property : Square
     {
         public string name;
-        public TypeProperty type; // type of property
-        public long buying_cost; // what the property costs if a player wants to buy it
-        public long taxes; // what the players who do not own the property will have to pay the owner if they land on it
-        public PropertySituation situation; // is the property free, bought, is there a house or a hotel on it? 
-        public Player owner; // the owner of the property, if it has been bought
+        public TypeProperty type;
+        public long buying_cost; 
+        public long taxes; 
+        public PropertySituation situation; 
+        public Player owner; 
 
         public string Name { get => name; set => name = value; }
         public TypeProperty Type { get => type; set => type = value; }

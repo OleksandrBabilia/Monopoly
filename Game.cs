@@ -5,9 +5,9 @@ namespace Monopoly
     public class Game
     {
         private static Game _instance;
-        public List<Player> players = new List<Player>(); // who is playing
+        public List<Player> players = new List<Player>(); 
         public GameBoard board_game ;
-        public int rounds; // number of rounds played
+        public int rounds; 
         public Player winner;
 
         private readonly Dictionary<int, IPlayersActionHandler> _actionHandler;
@@ -321,7 +321,7 @@ namespace Monopoly
             else if (board_game.board[player.position].GetType() == c.GetType())
             {
                 c = (Card)board_game.board[player.position];
-                Console.WriteLine($"Info :{c.what}/{player.position}");
+                
                 Console.WriteLine(c.type.ToString() + " card!");
                 CardSquare(c, player, compt);
             }
